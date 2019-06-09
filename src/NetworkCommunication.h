@@ -1,7 +1,7 @@
 //----------------------------------------------------
 // File:		NetworkCommunication.h
-// Version:  	v1.0.0
-// Change date:	15.04.2019
+// Version:  	v1.0.1
+// Change date:	09.06.2019
 // Autor:    	4Source
 // Homepage: 	github.com/4Source
 //----------------------------------------------------
@@ -65,6 +65,57 @@ uint8_t network_Start(const char* ssid_sta, const char* wpa2_sta, const char* ss
 		WiFi.softAP(ssid_ap, wpa2_ap);
 		ret = 2;
 	}
+	
+	//WebServer
+	setRequest_Handler();		//Handler
+    server.begin();				//Start Webserver
+	return ret;
+}
+//ssid WIFI name, wpa2 WIFI password
+uint8_t network_Start(const char* ssid_ap, const char* wpa2_ap) 
+{	
+	uint8_t ret = 0;
+	// uint8_t conatt = 5;
+	uint8_t trys = 0;
+	//Disconnect
+	WiFi.disconnect();
+	while (WiFi.status() != WL_DISCONNECTED && (trys++) < 10)
+	{
+		delay(100);
+	}
+	// trys = 0;
+	// WiFi.setAutoConnect(false);
+	
+	/* //Station Mode
+	while (WiFi.status() != WL_CONNECTED && (trys++) < conatt)
+	{
+		
+		WiFi.mode(WIFI_STA);
+		WiFi.begin(ssid_sta, wpa2_sta);
+		// WiFi.config(ip_ip, ip_gw, ip_sm);
+		
+		int counter = 0;
+		while (WiFi.status() != WL_CONNECTED && (counter++) < 10)
+		{
+			delay(50);
+		}
+	}
+	if(WiFi.status() == WL_CONNECTED)
+	{
+		apConnectedDevices = -1;
+		ret = 1;
+	} */
+	//Access Point
+	// else	
+	// {
+		apConnectedDevices=0;
+		
+		// WiFi.disconnect(); delay(1000);
+		WiFi.mode(WIFI_AP);
+		// WiFi.softAPConfig(ip_ip, ip_gw, ip_sm);
+		WiFi.softAP(ssid_ap, wpa2_ap);
+		ret = 2;
+	// }
 	
 	//WebServer
 	setRequest_Handler();		//Handler
