@@ -7,7 +7,7 @@
 #######################################
 
 network_Start	KEYWORD2
-status_WiFi		KEYWORD2
+status_WiFi	KEYWORD2
 handleClient	KEYWORD2
 checkClients	KEYWORD2
 getCountDevices	KEYWORD2
