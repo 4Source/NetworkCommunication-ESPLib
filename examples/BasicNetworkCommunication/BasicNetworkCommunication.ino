@@ -1,21 +1,16 @@
 //----------------------------------------------------
 // File:		BasicNetworkCommunication.ino
-// Version:  	v1.0
-// Change date:	15.04.2019
+// Version:  	v1.0.7
+// Change date:	12.09.2019
 // Autor:    	4Source
 // Homepage: 	github.com/4Source
 //----------------------------------------------------
+#define STASSID "yourSSID"
+#define STAWPA2  "yourPW"
 
 #include <NetworkCommunication.h>
 
 extern ESP8266WebServer server;
-
-const char* ssid = "your-ssid";				//change this
-const char* wpa2 = "your-password";			//change this
-
-IPAddress ip_static(192, 168, 2, 199);		//change this
-IPAddress ip_gateway(192, 168, 2, 199);		//change this
-IPAddress ip_submask(255, 255, 255, 0);		//change this
 
 //Example Handler 
 //>>>
@@ -41,15 +36,10 @@ void setup(void) {
 	while(!Serial);
 	Serial.println();
 	
-	char mode = network_Start(ssid, wpa2, "ESP-WLAN", "", ip_static, ip_gateway, ip_submask);
-	if(mode == 1)
-	{
-		Serial.println("WIFI Station");
-	}
-	else if(mode == 2)
-	{
-		Serial.println("WIFI Accesspoint");
-	}
+	char mode = network_Start();
+	
+	Serial.println();
+	SerialOut(mode);
 	Serial.println("Ready!");
 }
 //Loop
